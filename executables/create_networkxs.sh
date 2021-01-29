@@ -1,0 +1,2 @@
+cd models && python create_networkxs.py --num_nodes 1000 --all True && cd - # Create all graphs with 1000 individuals
+cd models && python create_networkxs.py --num_nodes 5000 --specific_network scale_free # Create scale free with 5000 individuals
