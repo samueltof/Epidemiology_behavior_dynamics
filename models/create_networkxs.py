@@ -45,7 +45,7 @@ if (args.all == False) and (args.specific_network == 'grid'):
 if args.all == True:
     # Scale-free graph
     graph_sf = nx.scale_free_graph( args.num_nodes ).to_undirected()
-    nx.write_gpickle(graph_sf, os.path.join(main_path, networks_path, str(args.num_nodes), 'new_scale_free_'+str(args.num_nodes) ) )
+    nx.write_gpickle(graph_sf, os.path.join(main_path, networks_path, str(args.num_nodes), 'scale_free_'+str(args.num_nodes) ) )
     print('Scale-Free graph created!\n')
 
     # Watts-Strogatz graph

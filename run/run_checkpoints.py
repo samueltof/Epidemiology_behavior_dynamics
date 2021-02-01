@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import os
-import random 
+import sys
 import networkx as nx
 from models import sis_replicator
 
@@ -13,14 +13,14 @@ parser.add_argument('--network_type', type=str, default='scale_free',
                     help='Network type for storing...')
 parser.add_argument('--network_name', type=str, default='new_scale_free_5000',
                     help='Network type for storing...')
+parser.add_argument('--beta', type=float,
+                    help='Specify the infection probability')
+parser.add_argument('--sigma', type=float,
+                    help='Specify the awareness')
 parser.add_argument('--type_sim', default='global',type=str, 
                     help='For running local or global simulation')
 
 args = parser.parse_args()
-
-# sigma_search = pd.read_csv(args.awareness_path, dtype={'key':str, 'value':float})
-# beta_search  = pd.read_csv(args.infection_prob_path, dtype={'key':str, 'value':float})
-
 
 config_data = pd.read_csv('config.csv', sep=',', header=None, index_col=0)
 
@@ -33,45 +33,20 @@ if args.network_name == 'new_scale_free_5000':
 G = nx.read_gpickle( os.path.join(networks_path, args.network_name) )
 
 
-df_params = pd.DataFrame(columns=['beta_key', 'sigma_key','beta', 'sigma', 'R0'])
+df_params = pd.DataFrame(columns=['beta', 'sigma', 'R0'])
 
 # Selected sigmas and betas
-select_sigmas = [1.0,0.7,0.5] #[0.7]  #[0.2, 0.7, 1.0, 1.0]
-select_sig_k  = ['100','070','050'] #['070']  #['020', '070', '100', '100']
-select_betas  = [0.6,0.6,0.6] #[0.7] #[0.3, 0.6, 0.6, 0.9]
-select_bet_k  = ['060','060','060'] #['070'] #['030', '060', '060', °'090']
+select_sigmas = [args.sigma]
+select_betas  = [args.beta]
 gamma         = 1/7
 repro_numbers = list(np.array(select_betas)/gamma)
 
-df_params['beta_key']  = select_bet_k
-df_params['sigma_key'] = select_sig_k
 df_params['beta']      = select_betas
 df_params['sigma']     = select_sigmas
 df_params['R0']        = repro_numbers
 
-
-from models import run_model 
-
-# df = pd.concat([sigma_search, beta_search], axis=1)
-
-# df_param_run = pd.DataFrame(columns=['beta_key', 'sigma_key', 'beta_val', 'sigma_val'])
-
-# beta_key  = []
-# sigma_key = []
-# beta_val  = []
-# sigma_val = []
-# for idx_sigma , r_sigma in sigma_search.iterrows():
-#     for idx_beta , r_beta in beta_search.iterrows():
-
-#         beta_key.append( r_beta['key']   )
-#         sigma_key.append( r_sigma['key'] )
-#         beta_val.append( r_beta['value'] )
-#         sigma_val.append( r_sigma['value'] )
-
-# df_param_run['beta_key'] = beta_key  
-# df_param_run['sigma_key'] = sigma_key 
-# df_param_run['beta_val'] = beta_val  
-# df_param_run['sigma_val'] = sigma_val 
+sys.path.append('../')
+from models import models 
 
 
 initConditions = pd.read_csv('init_conditions/initial_conditions.csv')
@@ -123,4 +98,4 @@ for i in tqdm(range(0,len(initConditions.index)), total = len(initConditions.ind
 print('\t DONE!\n')
 
 import os
-os.system('say "your program has finished" ')
+os.system('say "your program has finished"to_undirected

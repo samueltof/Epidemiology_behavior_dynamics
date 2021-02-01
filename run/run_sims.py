@@ -19,6 +19,10 @@ parser.add_argument('--infection_prob_path', default='param_search/beta.csv',typ
                     help='Infection Probability (beta) for running and saving simulations')
 parser.add_argument('--type_sim', default='global',type=str, 
                     help='For running local or global simulation')
+parser.add_argument('--n_iters', default=20,type=int, 
+                    help='Number of iterations')
+parser.add_argument('--max_time', default=150,type=int, 
+                    help='Number of days of simulation')
 
 args = parser.parse_args()
 
@@ -57,10 +61,10 @@ df_param_run['beta_val'] = beta_val
 df_param_run['sigma_val'] = sigma_val 
 
 if args.type_sim=='local':
-    local = False
-elif args.type_sim=='global':
     local = True
-
+elif args.type_sim=='global':
+    local = False
+n_iters = args.n_iters
 print('Running simulations for {} network in {}  scheme\n'.format(args.network_type, args.type_sim))
 
 sys.path.append('../')
@@ -89,6 +93,6 @@ for idx, r in tqdm(df_param_run.iterrows()):
         continue
     print( 'Running for beta={}, sigma={} \r'.format(r['beta_val'], r['sigma_val']) )
 
-    df_response = models.run_model(models.sis_replicator, G , params=model_params, n_iters=20, max_time=150, num_checkpoints=0, local=local, path_to_save_checkpoints= path_to_save_checkpoints)
+    df_response = models.run_model(models.sis_replicator, G , params=model_params, n_iters=n_iters, max_time=args.max_time, num_checkpoints=0, local=local, path_to_save_checkpoints= path_to_save_checkpoints)
     df_response.to_csv( path_to_save_response )
 print('\t DONE!\n')
