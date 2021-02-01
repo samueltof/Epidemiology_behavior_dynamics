@@ -19,7 +19,7 @@
 
 ### Creation of networks using *networkx*
 
-In this investigation, we account for three different types of networks where we ran simulations on: Scale-free, Watts-Strogarz small world and grid graph. To create these networks that are used in simulation, you need to define the number of nodes (*n*) with `--num_nodes <n>`. If not, it is set to *n=1000* automatically. Hence, if you want to create all the networks specify `--all True`. To do this, run:
+In this investigation, we account for three different types of networks where we ran simulations on: Scale-free, Watts-Strogatz small world and grid topologies. To create these networks that are used in simulation, you need to define the number of nodes (*n*) with `--num_nodes <n>`. If not, it is set to *n=1000* automatically. Hence, if you want to create all the networks specify `--all True`. To do this, run:
 
     cd models && python create_networkxs.py --num_nodes 1000 --all True && cd - 
 
@@ -29,7 +29,7 @@ Conversely, if you want to create a specific network (say `scale_free`, `small_w
 
 ### Run simulations
 
-In order to run a simulation, a combination of the infection probability (*beta*) and awareness (*sigma) must be given. This combination are specified on the files `beta_search.csv` and `sigma_search.csv` located on the `run/init_conditions` folder. Each file will contain a row with the parameter value and a key for saving the result (as shown below). We test the model on an interval between 0-1, this means the files `<>_search.csv` contains values in the range of 0 and 1 with space intervals of 0.02 as discribed below:
+In order to run a simulation, a combination of the infection probability (*beta*) and awareness (*sigma*) must be given. This combination are specified on the files `beta_search.csv` and `sigma_search.csv` located on the `run/init_conditions` folder. Each file will contain a row with the parameter value and a key for saving the result (as shown below). We test the model on an interval between 0-1, this means the files `<>_search.csv` contains values in the range of 0 and 1 with space intervals of 0.02 as decribed below:
 
     key,value
     000,0.00,
@@ -52,7 +52,7 @@ And for `beta_search.csv` are:
     060,0.60
     070,0.70
 
-Besides, the other entries to the model are the `network_type`, the `network_name` (output name after creating the network(s)), the `type_sim` which may be specified as `global` or `local`, the number of iterations `n_iters` (which is 20 by defaul), and the length of simulation given by `max_time` which is set to 150 days. If you want to change the number of iterrations (*iters*), add `--n_iters <iters>` to the command. To change the length of simulation (*days*) add `--max_time <days>`. The execution is then: `cd run && python run_sims.py --network_type <> --network_name <> --type_sim <> && cd -`.
+Besides, the other entries to the model are the `network_type`, the `network_name` (output name after creating the network(s)), the `type_sim` which may be specified as `global` or `local`, the number of iterations `n_iters` (20 by default), and the length of simulation given by `max_time` which is set to 150 days. If you want to change the number of iterations (*iters*), add `--n_iters <iters>` to the command. To change the length of simulation (*days*) add `--max_time <days>`. The execution is then: `cd run && python run_sims.py --network_type <> --network_name <> --type_sim <> && cd -`.
 
 ##### For running simulations over a scale-free network with 1000 nodes in both information transmission scheme (as shown in the paper)
 
@@ -73,8 +73,7 @@ Besides, the other entries to the model are the `network_type`, the `network_nam
 
 ##### For running simulations over a ODE (as shown in the paper)
 
-
-#### Sumulation for cluster analysis
+#### Simulation for cluster analysis
 
 In order to analyse how the community structures (i.e. clusters or hubs) affected infection and behavior, several initial conditions are tested. To generate this initial conditions, run:
 
