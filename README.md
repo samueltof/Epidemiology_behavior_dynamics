@@ -12,7 +12,7 @@
 1. Make sure to have dependencies installed
 2. Clone our repository `https://github.com/biomac-lab/Epidemiology_behavior_dynamics.git`
 3. Create networks
-4. Simulate
+4. Simulate (may take a lot of time!)
 5. Generate figures
 
 ## Usage
